@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>IcePeak</title>
+</head>
+
+<body style="margin: 0px; overflow: hidden;" oncontextmenu="return false;">
+  <canvas id="unity-canvas"
+    style="position: fixed; width: 100%; height: 100%; background: #231F20">
+  </canvas>
+
+  <div id="progress-bar" style="position: absolute; left: 0%; right: 100%; top: 49%; bottom: 49%; background-color: white;"></div>
+
+  <script src="Build/VKBuild.loader.js"></script>
+  <script>
+    const settings = {
+      dataUrl: "Build/23fee4aa01cfdb2000786498a58d8bdc.data.unityweb",
+      frameworkUrl: "Build/562954d3073c073fb106e2d237e874e0.js.unityweb",
+      codeUrl: "Build/a88a5865969eed8fe4e7aa12749ad918.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Agava",
+      productName: "IcePeak",
+      productVersion: "1.1",
+      matchWebGLToCanvasSize: true,
+    };
+
+    const progressBar = document.querySelector("#progress-bar");
+
+    setTimeout(() => {
+      createUnityInstance(document.querySelector("#unity-canvas"), settings, (progress) => {
+        progressBar.style.right = 100 * (1 - progress) + "%";
+      }).then(() => {
+        progressBar.style.display = "none";
+      }).catch((message) => {
+        alert(message);
+      });
+    }, 500); // Wait half a second before loading. Makes page more responsive on reload.
+  </script>
+</body>
+
+</html>
